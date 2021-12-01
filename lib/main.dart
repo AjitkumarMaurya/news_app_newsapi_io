@@ -156,9 +156,8 @@ class FirstPageState extends State<FirstPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => NewsDetailsScreen(
-                        headline: mData,
-                        size: articles.length.toString(),
-                        pos: (index + 1).toString()))),
+                        headline: articles,
+                        posNew: index))),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

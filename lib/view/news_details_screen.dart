@@ -6,12 +6,10 @@ import 'package:news_app_newsapi_io/model/headline_response.dart';
 class NewsDetailsScreen extends StatefulWidget {
   static String tag = '/NewsDetailsScreen';
 
-  final Articles headline;
-  final String size;
-  final String pos;
+  final List<Articles> headline;
+  final int posNew;
 
-  NewsDetailsScreen(
-      {required this.headline, required this.size, required this.pos});
+  const NewsDetailsScreen({required this.headline, required this.posNew});
 
   @override
   NewsDetailsScreenState createState() => NewsDetailsScreenState();
@@ -19,6 +17,7 @@ class NewsDetailsScreen extends StatefulWidget {
 
 class NewsDetailsScreenState extends State<NewsDetailsScreen> {
   bool isFollowing = false;
+  late int cuPos = widget.posNew;
 
   @override
   void initState() {
@@ -36,13 +35,16 @@ class NewsDetailsScreenState extends State<NewsDetailsScreen> {
       appBar: AppBar(
         leading: IconButton(
             color: Colors.black,
-            icon: Icon(Icons.arrow_back_ios_sharp),
+            icon: const Icon(Icons.arrow_back_ios_sharp),
             onPressed: () {
               finish(context);
             }),
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text(widget.pos + '/' + widget.size,
+        title: Text(
+            (cuPos + 1).toString() +
+                '/' +
+                widget.headline.length.toString(),
             style: const TextStyle(
               fontSize: 16.0,
               color: Colors.black,
@@ -60,24 +62,22 @@ class NewsDetailsScreenState extends State<NewsDetailsScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                widget.headline.urlToImage != null
+                widget.headline[cuPos].urlToImage != null
                     ? Container(
                         height: 240.0,
                         width: double.infinity,
                         child: CachedNetworkImage(
-                          imageUrl:
-                          widget.headline.urlToImage!,
+                          imageUrl: widget.headline[cuPos].urlToImage!,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: imageProvider,
                                   fit: BoxFit.cover,
                                 ),
-                                borderRadius: BorderRadius.circular(0)
-                            ),
+                                borderRadius: BorderRadius.circular(0)),
                           ),
                           placeholder: (context, url) => const Padding(
-                            padding: EdgeInsets.fromLTRB(40,35,40,35),
+                            padding: EdgeInsets.fromLTRB(40, 35, 40, 35),
                             child: CircularProgressIndicator(),
                           ),
                           errorWidget: (context, url, error) =>
@@ -87,25 +87,24 @@ class NewsDetailsScreenState extends State<NewsDetailsScreen> {
                     : Container(
                         height: 240.0,
                         width: double.infinity,
-                  child: CachedNetworkImage(
-                    imageUrl:
-                    "https://as1.ftcdn.net/v2/jpg/00/88/43/58/500_F_88435823_c3MiOAvV8gFwtQzTGlsLt6I6mFvQuQmN.jpg",
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              "https://as1.ftcdn.net/v2/jpg/00/88/43/58/500_F_88435823_c3MiOAvV8gFwtQzTGlsLt6I6mFvQuQmN.jpg",
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius: BorderRadius.circular(0)),
                           ),
-                          borderRadius: BorderRadius.circular(0)
-                      ),
-                    ),
-                    placeholder: (context, url) => const Padding(
-                      padding: EdgeInsets.fromLTRB(40,35,40,35),
-                      child: CircularProgressIndicator(),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        Icon(Icons.error),
-                  ),
+                          placeholder: (context, url) => const Padding(
+                            padding: EdgeInsets.fromLTRB(40, 35, 40, 35),
+                            child: CircularProgressIndicator(),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
                       ),
                 const SizedBox(
                   height: 8.0,
@@ -127,7 +126,7 @@ class NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        widget.headline.source!.name!,
+                                        widget.headline[cuPos].source!.name!,
                                         style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14.0,
@@ -149,14 +148,16 @@ class NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                       ),
                                     ],
                                   )).expand(flex: 3),
-                              widget.headline.isBookmark
+                              widget.headline[cuPos].isBookmark
                                   ? IconButton(
                                       color: Colors.blue,
                                       icon: const Icon(Icons.bookmark_sharp),
                                       onPressed: () {
                                         setState(() {
-                                          widget.headline.isBookmark =
-                                              !widget.headline.isBookmark;
+                                          widget.headline[cuPos]
+                                                  .isBookmark =
+                                              !widget.headline[cuPos]
+                                                  .isBookmark;
                                         });
                                         toasty(
                                             context, 'Removed from Bookmark');
@@ -166,8 +167,10 @@ class NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                           Icons.bookmark_border_sharp),
                                       onPressed: () {
                                         setState(() {
-                                          widget.headline.isBookmark =
-                                              !widget.headline.isBookmark;
+                                          widget.headline[cuPos]
+                                                  .isBookmark =
+                                              !widget.headline[cuPos]
+                                                  .isBookmark;
                                         });
                                         toasty(context, 'Added to Bookmark');
                                       }),
@@ -180,7 +183,7 @@ class NewsDetailsScreenState extends State<NewsDetailsScreen> {
                         Container(
                           padding: const EdgeInsets.all(0),
                           child: Text(
-                            widget.headline.title!,
+                            widget.headline[cuPos].title!,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0,
@@ -194,7 +197,7 @@ class NewsDetailsScreenState extends State<NewsDetailsScreen> {
                         Container(
                           padding: const EdgeInsets.all(0),
                           child: Text(
-                            widget.headline.description!,
+                            widget.headline[cuPos].description!=null ? widget.headline[cuPos].description! : "No Description",
                             style: const TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 16.0,
@@ -213,10 +216,61 @@ class NewsDetailsScreenState extends State<NewsDetailsScreen> {
               ),
             ).expand(flex: 1),
             Container(
-              width: double.infinity,
-              height: 50.0,
-              color: Colors.white,
-            ).expand(flex: 70),
+                width: double.infinity,
+                height: 50.0,
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (cuPos != 0) {
+                              cuPos--;
+                              print(cuPos);
+                            }else{
+                              cuPos = 0;
+                            }
+                          });
+
+                        },
+                        child:  Text(
+                          'Previous',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.0,
+                            color: cuPos != 0 ? Colors.black : const Color.fromARGB(255, 137, 133, 133),
+                          ),
+                        ),
+                      ).expand(flex: 1),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (cuPos < widget.headline.length) {
+                              cuPos++;
+                              print(cuPos);
+
+                            }
+                          });
+
+                        },
+                        child: Text(
+                          'Next',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.0,
+                            color: cuPos < widget.headline.length ?  Colors.black :const Color.fromARGB(255, 137, 133, 133),
+                          ),
+                        ),
+                      ).expand(flex: 1),
+                    ],
+                  ),
+                )).expand(flex: 70),
           ],
         ),
       ),
