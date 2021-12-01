@@ -36,6 +36,8 @@ class FirstPage extends StatefulWidget {
 }
 
 class FirstPageState extends State<FirstPage> {
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ApiCall client = ApiCall();
   String _connectionStatus = 'Unknown';
   String oldRes = "";
@@ -70,28 +72,47 @@ class FirstPageState extends State<FirstPage> {
   Future<void> _updateConnectionStatus(ConnectivityResult result) async {
     switch (result) {
       case ConnectivityResult.wifi:
-        setState(() => _connectionStatus = "200");
+        setState(() {
+          _connectionStatus = "200";
+        });
+
         break;
       case ConnectivityResult.mobile:
-        setState(() => _connectionStatus = "200");
+        setState(() {
+          _connectionStatus = "200";
+        });
+
         break;
       case ConnectivityResult.none:
-        setState(() => _connectionStatus = "201");
+
+        setState(() {
+          _connectionStatus = "201";
+        });
+
         break;
       default:
-        setState(() => _connectionStatus = '201');
+        setState(() {
+          _connectionStatus = "201";
+        });
         break;
     }
   }
 
-  @override
+  void showSnackBar(String msg){
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+  }
+
+@override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
             color: Colors.black,
             icon: const Icon(Icons.dehaze_rounded),
-            onPressed: () {}),
+            onPressed: () {
+              showSnackBar("Under Development !");
+            }),
         centerTitle: true,
         title: const Text("News",
             textAlign: TextAlign.center, style: TextStyle(color: Colors.black)),

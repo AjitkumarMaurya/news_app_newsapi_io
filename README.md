@@ -1,16 +1,22 @@
 # news_app_newsapi_io
 
-A new Flutter project.
+Flutter project News App.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+<div align="left" width="100%">
 
-A few resources to get you started if this is your first Flutter project:
+ <img src="/ss/image1.jpeg" width="15%"/> 
+ <img src="/ss/image2.jpeg" width="15%"/>
+</div>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+This project implemented newsapi.io api response to display all data.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This app has two screen main list view where all headline will be display and 
+detail page view for more information.
+
+This app work online and offline mode but first time need internet connection to load data and it will save as locally 
+after that every time data local data sync with live response.
+
+
+
