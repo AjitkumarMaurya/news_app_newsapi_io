@@ -1,9 +1,5 @@
 # news_app_newsapi_io
 
-Flutter project News App.
-
-## Getting Started
-
 <div align="left" width="100%">
 
  <img src="/ss/image1.JPEG" width="15%"/> 
