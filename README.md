@@ -6,8 +6,8 @@ Flutter project News App.
 
 <div align="left" width="100%">
 
- <img src="/ss/image1.jpeg" width="15%"/> 
- <img src="/ss/image2.jpeg" width="15%"/>
+ <img src="/ss/image1.JPEG" width="15%"/> 
+ <img src="/ss/image2.JPEG" width="15%"/>
 </div>
 
 This project implemented newsapi.io api response to display all data.
