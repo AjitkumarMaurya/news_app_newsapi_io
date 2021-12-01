@@ -36,6 +36,7 @@ class Articles {
   String? urlToImage;
   String? publishedAt;
   String? content;
+  bool isBookmark = false;
 
   Articles(
       {this.source,
