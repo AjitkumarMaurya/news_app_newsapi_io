@@ -1,7 +1,6 @@
 # news_app_newsapi_io
 
 <div align="left" width="100%">
-
  <img src="/ss/image1.JPEG" width="15%"/> 
  <img src="/ss/image2.JPEG" width="15%"/>
 </div>
